@@ -1,0 +1,5 @@
+locust
+faker
+prometheus-client
+python-dotenv
+beautifulsoup4

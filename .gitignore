@@ -1,0 +1,40 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Locust reports and logs
+reports/
+logs/
+
+# Prometheus and Grafana configurations
+monitoring/prometheus.yml
+monitoring/grafana.db
+
+# Environment variables
+.env
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Byte-compiled files
+*.so
+
+# Test artifacts
+*.log
+*.out
+*.tmp
+
+
+dist/
+build/

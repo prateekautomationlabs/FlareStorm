@@ -1,0 +1,33 @@
+name: Run Performance Test
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  perf-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run Locust Headless
+      env:
+        BASE_URL: https://blazedemo.com
+        MIN_WAIT: 1
+        MAX_WAIT: 3
+        USERS: 50
+        SPAWN_RATE: 10
+        RUN_TIME: 1m
+      run: |
+        mkdir -p reports logs
+        locust -f locustfile.py --headless -u $USERS -r $SPAWN_RATE -t $RUN_TIME --host=$BASE_URL
