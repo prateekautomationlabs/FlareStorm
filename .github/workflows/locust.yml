@@ -9,18 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
         pip install -r requirements.txt
 
-    - name: Run Locust Headless
+    - name: Run Locust in Headless Mode
       env:
         BASE_URL: https://blazedemo.com
         MIN_WAIT: 1
@@ -30,4 +31,15 @@ jobs:
         RUN_TIME: 1m
       run: |
         mkdir -p reports logs
-        locust -f locustfile.py --headless -u $USERS -r $SPAWN_RATE -t $RUN_TIME --host=$BASE_URL
+        locust -f locustfile.py --headless \
+          -u $USERS -r $SPAWN_RATE -t $RUN_TIME \
+          --host=$BASE_URL \
+          --csv=reports/locust_run \
+          --html=reports/locust_report.html \
+          --logfile=logs/locust.log
+
+    - name: Upload Locust Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: locust-report
+        path: reports/
