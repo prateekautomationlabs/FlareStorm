@@ -1,4 +1,4 @@
-name: Run Performance Test
+name: Run Performance Test with Github Actions
 
 on:
   push:
